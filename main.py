@@ -1,5 +1,7 @@
 import streamlit as st
 from model import model
+from model_page import model_page
+from predict_page import predict_page
 
 def main():
     menu = st.sidebar.selectbox(
@@ -8,31 +10,8 @@ def main():
     )
 
     if menu == "View model":
-        st.title('Predicting Bitcoin Price with Machine Learning')
-
-        st.subheader("Getting Data")
-        df = model("get_database")
-        st.dataframe(df)
-
-        st.subheader("Pre processing Data")
-        st.write("Data Normalized")
-        pre_df = model("pre_processing_data")
-        st.dataframe(pre_df)
-
-        st.subheader("Model Prediction")
-        st.write("To make this machine learning model, we used Decision Tree Regressor model")
-
-        predict_df = model("database_predict")
-        st.dataframe(predict_df)
-
-        score = model("model_score")*100
-        st.metric(label="Model Accuracy", value=f'{score:.2f}%')
+        model_page()
     
     else:
-        st.title('Try Model')
-
-        text_input = st.text_input(
-            "Enter the Low Value of the Day",
-            placeholder="Low Value",
-        )
+        predict_page()
 main()
